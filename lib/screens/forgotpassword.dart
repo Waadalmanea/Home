@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ratq_appp/screens/authentication_service.dart';
 import 'package:ratq_appp/screens/home_screen.dart';
+import 'package:ratq_appp/screens/login_screen.dart';
 
 class Password extends StatefulWidget {
   const Password({super.key});
@@ -10,7 +11,7 @@ class Password extends StatefulWidget {
 }
 
 class _PasswordState extends State<Password> {
-  final _auth = FirebaseAuth.instance;
+  final _authenticationService = AuthenticationService();
 
   late String email;
   late String password;
@@ -20,16 +21,16 @@ class _PasswordState extends State<Password> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Forget Password'),
-        titleTextStyle: TextStyle(
+        title: const Text('Forget Password'),
+        titleTextStyle: const TextStyle(
             color: Color(0xffeaece1),
             fontWeight: FontWeight.bold,
             fontSize: 20),
-        backgroundColor: Color(0xff8DB792),
+        backgroundColor: const Color(0xff8DB792),
         toolbarHeight: 70,
         leading: IconButton(
           iconSize: 15,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new_outlined,
             color: Color(0xffeaece1),
           ),
@@ -63,92 +64,91 @@ class _PasswordState extends State<Password> {
                   onChanged: (value) {
                     email = value;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: '   Enter your email',
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+            //هذي الحقول الغيتها لان بيكون اعادة التعيين الباس عبر الايميل ينرسل
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         borderRadius: BorderRadius.circular(10)),
+            //     child: TextField(
+            //       onChanged: (value) {
+            //         password = value;
+            //       },
+            //       obscureText: true,
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //         hintText: '   Enter a new password',
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '   Enter a new password',
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(height: 10),
 
-            SizedBox(height: 10),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         borderRadius: BorderRadius.circular(10)),
+            //     child: TextField(
+            //       onChanged: (value) {
+            //         password_2 = value;
+            //       },
+            //       obscureText: true,
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //         hintText: '   Re-enter the new password',
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  onChanged: (value) {
-                    password_2 = value;
-                  },
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '   Re-enter the new password',
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
 
             // button
             MaterialButton(
                 elevation: 5.0,
-                color: Color(0xff8DB792),
+                color: const Color(0xff8DB792),
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide.none,
+                ),
+                onPressed: () async {
+                  try {
+                    AuthStatus result = await _authenticationService
+                        .resetPassword(email: email);
+                    if (result == AuthStatus.successful) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const logInScreen();
+                      }));
+                    } else {
+                      print(result);
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                },
                 child: const Text(
-                  'Save',
+                  'Send request',
                   style: TextStyle(
                     color: Color.fromRGBO(234, 236, 225, 0.85),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide.none,
-                ),
-                onPressed: () {
-                  onPressed:
-                  () async {
-                    try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return homeScreen();
-                      }));
-                    } catch (e) {
-                      print(e);
-                    }
-                  };
-                }),
+                )),
           ]),
         ),
       ),

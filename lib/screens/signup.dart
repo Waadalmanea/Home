@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ratq_appp/screens/authentication_service.dart';
 import 'package:ratq_appp/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,6 +12,7 @@ class signUpScreen extends StatefulWidget {
 
 class _signUpScreenState extends State<signUpScreen> {
   final _auth = FirebaseAuth.instance;
+  final _authenticationService = AuthenticationService();
 
   late String email;
   late String password;
@@ -22,30 +24,30 @@ class _signUpScreenState extends State<signUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
-        titleTextStyle: TextStyle(
+        title: const Text('Sign Up'),
+        titleTextStyle: const TextStyle(
             color: Color(0xffeaece1),
             fontWeight: FontWeight.bold,
             fontSize: 20),
-        backgroundColor: Color(0xff8DB792),
+        backgroundColor: const Color(0xff8DB792),
         toolbarHeight: 70,
         leading: IconButton(
           iconSize: 15,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new_outlined,
             color: Color(0xffeaece1),
           ),
           onPressed: () => Navigator.pop(context, false),
         ),
       ),
-      backgroundColor: Color(0xffEAECE1),
+      backgroundColor: const Color(0xffEAECE1),
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //text
-              Text(
+              const Text(
                 'Sign Up',
                 style: TextStyle(
                   fontSize: 30.0,
@@ -53,7 +55,7 @@ class _signUpScreenState extends State<signUpScreen> {
                 ),
               ),
 
-              SizedBox(height: 50), //مسافه بين كلمة ساين اب و التكست فيلد
+              const SizedBox(height: 50), //مسافه بين كلمة ساين اب و التكست فيلد
 
               //text feild
 
@@ -67,14 +69,14 @@ class _signUpScreenState extends State<signUpScreen> {
                     onChanged: (value) {
                       fname = value;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '   Enter your first name',
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -85,14 +87,14 @@ class _signUpScreenState extends State<signUpScreen> {
                     onChanged: (value) {
                       lname = value;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '   Enter your last name',
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -104,7 +106,7 @@ class _signUpScreenState extends State<signUpScreen> {
                     onChanged: (value) {
                       email = value;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '   Enter your email',
                     ),
@@ -112,7 +114,7 @@ class _signUpScreenState extends State<signUpScreen> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -124,7 +126,7 @@ class _signUpScreenState extends State<signUpScreen> {
                       password = value;
                     },
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '   Enter your password',
                     ),
@@ -132,7 +134,7 @@ class _signUpScreenState extends State<signUpScreen> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -144,20 +146,57 @@ class _signUpScreenState extends State<signUpScreen> {
                       password_2 = value;
                     },
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '   Enter your password again',
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 // button
               MaterialButton(
                   elevation: 5.0,
-                  color: Color(0xff8DB792),
+                  color: const Color(0xff8DB792),
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide.none,
+                  ),
+                  onPressed: () async {
+                    try {
+                      String? result =
+                          await _authenticationService.createNewUser(
+                        email: email,
+                        password: password,
+                      );
+                      if (result != null) {
+                        String? logInResult = await _authenticationService
+                            .loginWithEmailAndPassword(
+                          email: email,
+                          password: password,
+                        );
+                        if (logInResult != null) {
+                          await _authenticationService.addUserData(
+                            firstName: fname,
+                            lastName: lname,
+                            email: email,
+                          );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return homeScreen();
+                              },
+                            ),
+                          );
+                        }
+                      }
+                      
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                   child: const Text(
                     'Sign Up',
                     style: TextStyle(
@@ -165,25 +204,7 @@ class _signUpScreenState extends State<signUpScreen> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide.none,
-                  ),
-                  onPressed: () async {
-                    try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return homeScreen();
-                      }));
-                    } catch (e) {
-                      print(e);
-                    }
-                  }),
+                  )),
             ],
           ),
         ),

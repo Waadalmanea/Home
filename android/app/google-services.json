@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "395441881225",
-    "project_id": "ratq-app",
-    "storage_bucket": "ratq-app.appspot.com"
+    "project_number": "382897237818",
+    "project_id": "ratq-app-86dea",
+    "storage_bucket": "ratq-app-86dea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:395441881225:android:0ff80793b41f9e8ca38658",
+        "mobilesdk_app_id": "1:382897237818:android:b012dfac67f6c5188b2a03",
         "android_client_info": {
-          "package_name": "com.example.centers"
+          "package_name": "com.home.ratq_appp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "395441881225-b5fq3s07nb6s85ip0vgv2e2n6giuv245.apps.googleusercontent.com",
+          "client_id": "382897237818-uhh0h72fv138rv87rdp7ds6pbl2rm9h3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFEjwKR5e5VW2ug1QHaluIMq19rfviZ5c"
+          "current_key": "AIzaSyBQS9k9YQ6WxEw5sJjiLyNUHd7xpzowEoY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "395441881225-b5fq3s07nb6s85ip0vgv2e2n6giuv245.apps.googleusercontent.com",
+              "client_id": "382897237818-uhh0h72fv138rv87rdp7ds6pbl2rm9h3.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "395441881225-5p51c5v6ufc5bmuf6gqhkvn2jiciru45.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.centers"
-              }
             }
           ]
         }
@@ -43,35 +36,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:395441881225:android:ef093c74e84ed749a38658",
+        "mobilesdk_app_id": "1:382897237818:android:a042a8401affae4d8b2a03",
         "android_client_info": {
-          "package_name": "com.home.ratq_appp"
+          "package_name": "ra.RatqTeam.ratq_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "395441881225-b5fq3s07nb6s85ip0vgv2e2n6giuv245.apps.googleusercontent.com",
+          "client_id": "382897237818-uhh0h72fv138rv87rdp7ds6pbl2rm9h3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFEjwKR5e5VW2ug1QHaluIMq19rfviZ5c"
+          "current_key": "AIzaSyBQS9k9YQ6WxEw5sJjiLyNUHd7xpzowEoY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "395441881225-b5fq3s07nb6s85ip0vgv2e2n6giuv245.apps.googleusercontent.com",
+              "client_id": "382897237818-uhh0h72fv138rv87rdp7ds6pbl2rm9h3.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "395441881225-5p51c5v6ufc5bmuf6gqhkvn2jiciru45.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.centers"
-              }
             }
           ]
         }
